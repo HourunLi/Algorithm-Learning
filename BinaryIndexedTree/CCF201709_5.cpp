@@ -2,7 +2,6 @@
 
 #define lowbit(x) (x&(-x))
 
-
 int main() {
     int n, m;
     cin >> n >> m;

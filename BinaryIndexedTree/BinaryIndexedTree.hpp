@@ -1,8 +1,19 @@
+/**
+ * @file BinaryIndexedTree.hpp
+ * @author HourunLi
+ * @brief Binary indexed tree template
+ * @version 0.1
+ * @date 2022-06-21
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __BINARY_INDEXED_TREE__
 #define __BINARY_INDEXED_TREE__
-#include "basic.hpp"
+#include "../basic.hpp"
 
 #define lowbit(x) (x&(-x))
+
 class BinaryIndexedTree {
 private:
     ll *tree;
@@ -13,15 +24,17 @@ public:
         tree = new ll[size+1]();
     }
 
-    void input(int n) {
-        for(int i = 1; i <=n; i++) {
-            scanf("%d", &tree[i]);
-        }
+    ~BinaryIndexedTree() {
+        delete[] tree;
+    }
+
+    void setVal(int index, int val) {
+        tree[index] = val;
         return;
     }
 
-    void buildTree(int n) {
-        for(int i = 1; i <= n; ++i) {
+    void buildTree() {
+        for(int i = 1; i <= size; ++i) {
             int directParent = i + lowbit(i);
             if(directParent <= size) {
                 tree[directParent] += tree[i];
@@ -48,7 +61,9 @@ public:
         }
         return ans;
     }
-
+    ll getRangeSum(int l, int r) {
+        return getSum(r) - getSum(l-1);
+    }
     ll *getTree() {
         return tree;
     }

@@ -1,3 +1,13 @@
+/**
+ * @file basic.hpp
+ * @author HourunLi
+ * @brief some basic macro and definitions
+ * @version 0.1
+ * @date 2022-06-21
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __BASIC_MACRO__
 #define __BASIC_MACRO__
 #include<bits/stdc++.h>

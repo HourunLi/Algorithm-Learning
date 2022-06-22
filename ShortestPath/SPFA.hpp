@@ -18,38 +18,29 @@
 
 class SPFA {
 private:
-    int n, m; // n is the number of nodes, m is the number of edges
     uint64 *dist;
     bool *inqueue;
-    // for build edges
-    uint32 *head, tot;
-    DirectedEdge *edges;
+    DirectedGraph *graph;
     queue<int> q;
 public:
-    SPFA(int n_, int m_): n(n_), m(m_) {
+    SPFA(DirectedGraph *graph_) {
+        graph = graph_;
+        int n = graph->getNodeNum(), m = graph->getEdgeNum();
         dist = new uint64[n+5]();
         // memset(dist, -1, (n+5) * sizeof(uint32));
         for(int i = 0; i < n+5; i++) {
             dist[i] = INF;
         }
         inqueue = new bool[n+5]();
-        edges = new DirectedEdge[m+5]();
-        head = new uint32[n+5]();
-        tot = 0;
     }
     ~SPFA() {
         delete[] dist;
         delete[] inqueue;
-        delete[] edges;
-        delete[] head;
     }
 
     // add edge
-    void add(int u, int v, int w) {
-        edges[++tot].next = head[u];
-        edges[tot].to = v;
-        edges[tot].w = w;
-        head[u] = tot; 
+    void add(int u, int v, int w = 0) {
+        graph->add(u, v, w);
     }
 
     void spfa(int source) {
@@ -60,10 +51,10 @@ public:
             int s = q.front();
             q.pop();
             inqueue[s] = false;
-            for(int e = head[s]; e !=0 ; e = edges[e].next) {
-                int t = edges[e].to;
-                if(dist[t] > dist[s] + edges[e].w) {
-                    dist[t] = dist[s] + edges[e].w;
+            for(int e = graph->begin(s); e != graph->end(); e = graph->next(e)) {
+                int t = graph->edge(e).to;
+                if(dist[t] > dist[s] + graph->edge(e).w) {
+                    dist[t] = dist[s] + graph->edge(e).w;
                     if(!inqueue[t]) {
                         inqueue[t] = true;
                         q.push(t);

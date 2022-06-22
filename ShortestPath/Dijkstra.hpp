@@ -18,38 +18,29 @@
 
 class Dijkstra{
 private:
-    int n, m; // n is the number of nodes, m is the number of edges
     uint64 *dist;
     bool *vis;
-    // for build edges
-    uint32 *head, tot;
-    DirectedEdge *edges;
+    DirectedGraph *graph;
     priority_queue<Pair, vector<Pair>, greater<Pair> > q;
 public:
-    Dijkstra(int n_, int m_): n(n_), m(m_){
+    Dijkstra(DirectedGraph *graph_) {
+        graph = graph_;
+        int n = graph->getNodeNum(), m = graph->getEdgeNum();
         dist = new uint64[n+5]();
         // memset(dist, -1, (n+5) * sizeof(uint32));
         for(int i = 0; i < n+5; i++) {
             dist[i] = INF;
         }
         vis = new bool[n+5]();
-        edges = new DirectedEdge[m+5]();
-        head = new uint32[n+5]();
-        tot = 0;
     }
 
     ~Dijkstra() {
         delete[] dist;
         delete[] vis;
-        delete[] edges;
-        delete[] head;
     }
     // add edge
-    void add(int u, int v, int w) {
-        edges[++tot].next = head[u];
-        edges[tot].to = v;
-        edges[tot].w = w;
-        head[u] = tot; 
+    void add(int u, int v, int w = 0) {
+        graph->add(u, v, w);
     }
 
     void dijkstra(int s) {
@@ -60,9 +51,9 @@ public:
             q.pop();
             if(vis[s]) continue;
             vis[s] = true;
-            for(int e = head[s]; e != 0; e = edges[e].next) {
-                int t = edges[e].to;
-                dist[t] = min(dist[t], dist[s] + edges[e].w);
+            for(int e = graph->begin(s); e != graph->end(); e = graph->next(e)) {
+                int t = graph->edge(e).to;
+                dist[t] = min(dist[t], dist[s] + graph->edge(e).w);
                 if(!vis[t]) {
                     q.push(make_pair(dist[t], t));
                 }

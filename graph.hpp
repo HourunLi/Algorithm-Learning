@@ -10,7 +10,7 @@
  */
 #ifndef __GRAPH_HPP__
 #define __GRAPH_HPP__
-#include "../basic.hpp"
+#include "basic.hpp"
 struct DirectedEdge {
     int next, from, to, w;
 };
@@ -112,7 +112,7 @@ private:
     DirectedGraph *graph;
     bool *vis;
     vector<int> topo;
-    
+
     bool dfs(int p) {
         vis[p] = -1;
         for(int e = graph->begin(p); e != graph->end(); e = graph->next(e)) {
@@ -125,8 +125,8 @@ private:
         return true;
     }
 public:
-    TopoSort(DirectedGraph &graph_) {
-        graph = &graph_;
+    TopoSort(DirectedGraph *graph_) {
+        graph = graph_;
         vis = new bool[graph->getNodeNum() + 5]();
     }
     ~TopoSort() {

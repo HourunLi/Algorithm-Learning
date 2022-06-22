@@ -10,7 +10,7 @@
  */
 #ifndef __GRAPH_HPP__
 #define __GRAPH_HPP__
-#include "E:\CodeLearning\codeLearning\basic.hpp"
+#include "../basic.hpp"
 struct DirectedEdge {
     int next, from, to, w;
 };
@@ -37,7 +37,7 @@ public:
         tot = 0;
     }
 
-    void add(int u, int v, int w) {
+    void add(int u, int v, int w = 0) {
         edges[++tot].next = head[u];
         edges[tot].from = u;
         edges[tot].to = v;
@@ -49,16 +49,16 @@ public:
         return head[u];
     }
 
-    uint32 next(uint32 p) {
-        return edges[p].next;
+    uint32 next(uint32 e) {
+        return edges[e].next;
     }
 
     uint32 end() {
         return 0;
     }
 
-    DirectedEdge edge(uint32 p) {
-        return edges[p];
+    DirectedEdge edge(uint32 e) {
+        return edges[e];
     }
 
     uint32 getEdgeNum() {
@@ -84,7 +84,7 @@ public:
         tot = 0;
     }
 
-    void add(int u, int v, int w) {
+    void add(int u, int v, int w = 0) {
         edges[++tot].u = u;
         edges[tot].v = v;
         edges[tot].w = w;
@@ -94,8 +94,8 @@ public:
         sort(edges+1, edges+m+1);
     }
 
-    UndirectedEdge edge(uint32 p) {
-        return edges[p];
+    UndirectedEdge edge(uint32 e) {
+        return edges[e];
     }
 
     uint32 getEdgeNum() {
@@ -104,6 +104,43 @@ public:
 
     uint32 getNodeNum() {
         return n;
+    }
+};
+
+class TopoSort {
+private:
+    DirectedGraph *graph;
+    bool *vis;
+    vector<int> topo;
+    
+    bool dfs(int p) {
+        vis[p] = -1;
+        for(int e = graph->begin(p); e != graph->end(); e = graph->next(e)) {
+            int v = graph->edge(e).to;
+            if(vis[v]) continue;
+            if(vis[v] < 0 || !dfs(v)) return false;
+        }
+        vis[p] = 1;
+        topo.push_back(p);
+        return true;
+    }
+public:
+    TopoSort(DirectedGraph &graph_) {
+        graph = &graph_;
+        vis = new bool[graph->getNodeNum() + 5]();
+    }
+    ~TopoSort() {
+        delete []vis;
+    }
+
+    vector<int> topoSort() {
+        int n = graph->getNodeNum(), m = graph->getEdgeNum();
+        for(int i = 1; i <= n; i++) {
+            if(vis[i]) continue;
+            if(!dfs(i)) return {};
+        }
+        reverse(topo.begin(), topo.end());
+        return topo;
     }
 };
 #endif // !__GRAPH_HPP__

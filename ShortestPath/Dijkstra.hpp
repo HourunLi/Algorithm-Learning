@@ -40,9 +40,9 @@ public:
         graph->add(u, v, w);
     }
 
-    void dijkstra(int s) {
-        dist[s] = 0;
-        q.push(make_pair(0, s));
+    void dijkstra(int source) {
+        dist[source] = 0;
+        q.push(make_pair(0, source));
         while(!q.empty()) {
             int s = q.top().second;
             q.pop();

@@ -15,7 +15,8 @@ int main() {
     freopen("input.txt", "r", stdin);
     int n, m, s;
     cin >> n >> m >> s;
-    SPFA solver = SPFA(n, m);
+    DirectedGraph graph(n, m);
+    SPFA solver = SPFA(&graph);
     int u, v, w;
     
     for(int i = 0; i < m; i++) {

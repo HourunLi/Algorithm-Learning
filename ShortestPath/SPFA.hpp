@@ -12,11 +12,11 @@
 #define __SPFA_HPP__
 #include "../basic.hpp"
 #include "../graph.hpp"
-#define INF (1<<31 - 1)
+#define INF 0x3f3f3f3f
 
 class SPFA {
 private:
-    uint64 *dist;
+    uint32 *dist;
     bool *inqueue;
     DirectedGraph *graph;
     queue<int> q;
@@ -24,11 +24,8 @@ public:
     SPFA(DirectedGraph *graph_) {
         graph = graph_;
         int n = graph->getNodeNum(), m = graph->getEdgeNum();
-        dist = new uint64[n+5]();
-        // memset(dist, -1, (n+5) * sizeof(uint32));
-        for(int i = 0; i < n+5; i++) {
-            dist[i] = INF;
-        }
+        dist = new uint32[n+5]();
+        memset(dist, INF, (n+5) * sizeof(uint32));
         inqueue = new bool[n+5]();
     }
     ~SPFA() {

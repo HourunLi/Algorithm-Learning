@@ -19,7 +19,6 @@ private:
     uint32 *dist;
     bool *inqueue;
     DirectedGraph *graph;
-    queue<int> q;
 public:
     SPFA(DirectedGraph *graph_) {
         graph = graph_;
@@ -39,6 +38,7 @@ public:
     }
 
     void spfa(int source) {
+        queue<int> q;
         dist[source] = 0;
         q.push(source);
         inqueue[source] = true;
@@ -58,7 +58,7 @@ public:
             }
         }
     }
-    uint64 getAnswer(int t) {
+    uint32 getAnswer(int t) {
         // return dist[t] == -1? INF : dist[t];
         return dist[t];
     }

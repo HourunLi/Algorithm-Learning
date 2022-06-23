@@ -21,7 +21,6 @@ private:
     uint32 *dist;
     bool *vis;
     DirectedGraph *graph;
-    priority_queue<Pair, vector<Pair>, greater<Pair> > q;
 public:
     Dijkstra(DirectedGraph *graph_) {
         graph = graph_;
@@ -41,6 +40,7 @@ public:
     }
 
     void dijkstra(int source) {
+        priority_queue<Pair, vector<Pair>, greater<Pair> > q;
         dist[source] = 0;
         q.push(make_pair(0, source));
         while(!q.empty()) {
@@ -59,7 +59,7 @@ public:
         }
     }
 
-    uint64 getAnswer(int t) {
+    uint32 getAnswer(int t) {
         // return dist[t] == -1? INF : dist[t];
         return dist[t];
     }

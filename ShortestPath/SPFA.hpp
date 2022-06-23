@@ -10,8 +10,6 @@
  */
 #ifndef  __SPFA_HPP__
 #define __SPFA_HPP__
-// #include "E:\CodeLearning\codeLearning\basic.hpp"
-// #include "E:\CodeLearning\codeLearning\graph.hpp"
 #include "../basic.hpp"
 #include "../graph.hpp"
 #define INF (1<<31 - 1)

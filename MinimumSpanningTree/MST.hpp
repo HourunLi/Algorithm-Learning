@@ -13,18 +13,18 @@
 #include "../basic.hpp"
 #include "../graph.hpp"
 #include "../UnionFind/UnionFind.hpp"
+
 class Kruskal {
 private:
     UndirectedGraph *graph;
     UnionFind *unionFind;
 public:
-    Kruskal(int n, int m) {
-        graph = new UndirectedGraph(n, m);
-        unionFind = new UnionFind(n);
+    Kruskal(UndirectedGraph *graph_) {
+        graph = graph_;
+        unionFind = new UnionFind(graph->getNodeNum());
     }
 
     ~Kruskal() {
-        delete graph;
         delete unionFind;
     }
 

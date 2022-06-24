@@ -67,11 +67,11 @@ public:
     }
 
     void setW(int e, int w) {
-        edges[e].w = w;
+        edges[e].weight = w;
         return;
     }
     void modW(int e, int delta) {
-        edges[e].w += delta;
+        edges[e].weight += delta;
         return;
     }
     uint32 getEdgeNum() {

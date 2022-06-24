@@ -12,7 +12,7 @@
 #define __GRAPH_HPP__
 #include "basic.hpp"
 struct DirectedEdge {
-    int next, from, to, weight, cost;
+    int next, from, to, w, cost;
 };
 
 struct UndirectedEdge {
@@ -45,7 +45,7 @@ public:
         edges[tot].next = head[u];
         edges[tot].from = u;
         edges[tot].to = v;
-        edges[tot].weight = weight;
+        edges[tot].w = weight;
         edges[tot].cost = cost;
         head[u] = tot; 
     }
@@ -67,11 +67,11 @@ public:
     }
 
     void setW(int e, int w) {
-        edges[e].weight = w;
+        edges[e].w = w;
         return;
     }
     void modW(int e, int delta) {
-        edges[e].weight += delta;
+        edges[e].w += delta;
         return;
     }
     uint32 getEdgeNum() {

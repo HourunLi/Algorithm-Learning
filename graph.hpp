@@ -12,7 +12,7 @@
 #define __GRAPH_HPP__
 #include "basic.hpp"
 struct DirectedEdge {
-    int next, from, to, w;
+    int next, from, to, weight, cost;
 };
 
 struct UndirectedEdge {
@@ -37,7 +37,7 @@ public:
         tot = 0;
     }
 
-    void add(int u, int v, int w = 0) {
+    void add(int u, int v, int weight = 0, int cost = 0) {
         if(++tot >= m) {
             edges = (DirectedEdge*)realloc(edges, sizeof(DirectedEdge) * (2*m));
             m *= 2;
@@ -45,7 +45,8 @@ public:
         edges[tot].next = head[u];
         edges[tot].from = u;
         edges[tot].to = v;
-        edges[tot].w = w;
+        edges[tot].weight = weight;
+        edges[tot].cost = cost;
         head[u] = tot; 
     }
 

@@ -9,8 +9,7 @@
  * 
  */
 
-#include "Dijkstra.hpp"
-#include "SPFA.hpp"
+#include "ShortestPath.hpp"
 int main() {
     freopen("input.txt", "r", stdin);
     int n, m, s;

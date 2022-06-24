@@ -38,7 +38,11 @@ public:
     }
 
     void add(int u, int v, int w = 0) {
-        edges[++tot].next = head[u];
+        if(++tot >= m) {
+            edges = (DirectedEdge*)realloc(edges, sizeof(DirectedEdge) * (2*m));
+            m *= 2;
+        }
+        edges[tot].next = head[u];
         edges[tot].from = u;
         edges[tot].to = v;
         edges[tot].w = w;
@@ -70,7 +74,7 @@ public:
         return;
     }
     uint32 getEdgeNum() {
-        return m;
+        return tot;
     }
 
     uint32 getNodeNum() {
@@ -93,7 +97,11 @@ public:
     }
 
     void add(int u, int v, int w = 0) {
-        edges[++tot].u = u;
+        if(++tot >= m) {
+            edges = (UndirectedEdge*)realloc(edges, sizeof(UndirectedEdge) * (2*m));
+            m *= 2;
+        }
+        edges[tot].u = u;
         edges[tot].v = v;
         edges[tot].w = w;
     }
@@ -107,7 +115,7 @@ public:
     }
 
     uint32 getEdgeNum() {
-        return m;
+        return tot;
     }
 
     uint32 getNodeNum() {

@@ -23,7 +23,7 @@ struct UndirectedEdge {
 };
 
 class DirectedGraph {
-private:
+protected:
     int n, m;
     uint32 *head, tot;
     DirectedEdge *edges;
@@ -79,7 +79,7 @@ public:
 };
 
 class UndirectedGraph {
-private:
+protected:
     int n, m;
     uint32 tot;
     UndirectedEdge *edges;

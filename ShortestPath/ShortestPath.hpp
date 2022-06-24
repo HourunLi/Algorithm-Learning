@@ -14,7 +14,6 @@
 // #include "E:\CodeLearning\codeLearning\graph.hpp"
 #include "../basic.hpp"
 #include "../graph.hpp"
-#define INF 0x3f3f3f3f
 
 class Dijkstra{
 private:

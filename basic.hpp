@@ -13,6 +13,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+#define INF 0x3f3f3f3f
 typedef unsigned int uint32;
 typedef long long ll;
 typedef unsigned long long uint64;

@@ -1,16 +1,22 @@
 /**
- * @file graph.hpp
- * @author HorunLi
- * @brief grpah template
+ * @file luoguP3376.cpp
+ * @author HourunLi
+ * @brief Maximal Flow example. Source: https://www.luogu.com.cn/problem/P3376
  * @version 0.1
- * @date 2022-06-21
+ * @date 2022-06-24
  * 
  * @copyright Copyright (c) 2022
  * 
  */
-#ifndef __GRAPH_HPP__
-#define __GRAPH_HPP__
-#include "basic.hpp"
+#include<bits/stdc++.h>
+using namespace std;
+
+#define INF 0x3f3f3f3f
+typedef unsigned int uint32;
+typedef long long ll;
+typedef unsigned long long uint64;
+typedef pair<int, int> Pair;
+
 struct DirectedEdge {
     int next, from, to, w;
 };
@@ -151,4 +157,74 @@ public:
         return topo;
     }
 };
-#endif // !__GRAPH_HPP__
+
+#define getREdge(i) ( ( (i-1) ^ 1) + 1 )
+
+class MaximalFlow {
+private:
+    int s, t;
+    DirectedGraph *graph;
+public:
+    MaximalFlow(DirectedGraph *graph_, int s, int t) : s(s), t(t){
+        graph = graph_;
+    }
+
+    // add edge
+    void add(int u, int v, int cap = 0) {
+        graph->add(u, v, cap);
+        graph->add(v, u, 0);
+    }
+
+    bool bfs(int *last, int* flow) {
+        int n = graph->getNodeNum();
+        memset(last, -1, sizeof(int) * (n+5));
+        queue<int> q;
+        q.push(s);
+        flow[s] = INT_MAX;
+        while(!q.empty()) {
+            int from = q.front();
+            q.pop();
+            if(from == t) break;
+            for(int e = graph->begin(from); e != graph->end(); e = graph->next(e)) {
+                int to = graph->edge(e).to, vol = graph->edge(e).w;
+                if(vol > 0 & last[to] == -1) {
+                    flow[to] = min(flow[from], vol);
+                    last[to] = e;
+                    q.push(to);
+                }
+            }
+        }
+        return last[t] != -1;
+    }
+    uint64 EdmondKarp() {
+        uint64 maxFlow = 0;
+        int n = graph->getNodeNum(), m = graph->getEdgeNum();
+        int *last = new int[n+5]();
+        int *flow = new int[n+5]();
+        while(bfs(last, flow)) {
+            maxFlow += flow[t];
+            for(int i = t; i !=s; i = graph->edge(getREdge(last[i])).to) {
+                graph->modW(last[i], -flow[t]);
+                graph->modW(getREdge(last[i]), flow[t]);
+            }
+        }
+        delete []last;
+        delete []flow;
+        return maxFlow;
+    }
+};
+
+int main() {
+    // freopen("input.txt", "r", stdin);
+    int n, m, s, t;
+    cin >> n >> m >> s >> t;
+    DirectedGraph graph(n, 2*m);
+    MaximalFlow solver(&graph, s, t);
+    int u, v, w;
+    for(int i = 1; i <= m; i++) {
+        scanf("%d %d %d", &u, &v, &w);
+        solver.add(u, v, w);
+    }
+    cout << solver.EdmondKarp() << endl;
+    return 0;
+}

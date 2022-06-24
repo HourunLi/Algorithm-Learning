@@ -1,13 +1,14 @@
 /**
- * @file luoguP1361.cpp
+ * @file luoguP2057.cpp
  * @author HourunLi
- * @brief MinimalCut application: Either or problem. Source: https://www.luogu.com.cn/problem/P1361
+ * @brief MinimalCut application: Either or problem. Source: https://www.luogu.com.cn/problem/P2057
  * @version 0.1
  * @date 2022-06-24
  * 
  * @copyright Copyright (c) 2022
  * 
  */
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -167,7 +168,6 @@ public:
 };
 
 #define getREdge(i) ( ( (i-1) ^ 1) + 1 )
-
 class MinimalCut : DirectedGraph {
 private:
     int s, t;
@@ -181,6 +181,11 @@ public:
         DirectedGraph::add(v, u, 0);
     }
 
+    void add_r(int u, int v, int cap) {
+        DirectedGraph::add(u, v, cap);
+        DirectedGraph::add(v, u, cap);
+    }
+    
     /**
      * @brief bfs function for Edmond Karp algorithm
      * 
@@ -287,41 +292,23 @@ public:
         return maxFlow;
     }
 };
-
-int a[1005], b[1005];
 int main() {
     // freopen("input.txt", "r", stdin);
     int n, m;
-    ll sum = 0;
-    cin >> n;
+    cin >> n >> m;
     int s = 1, t = n+2;
-    MinimalCut solver(3000, 3000, s, t);
-    for(int i = 0; i < n; i++) {
-        cin >> a[i];
-        sum += a[i];
+    MinimalCut solver(n+2, 2*n+m, s, t);
+    int tmp;
+    for(int i = 2; i <= n+1; i++) {
+        cin >> tmp;
+        solver.add(s, i, !tmp);
+        solver.add(i, t, tmp);
     }
-    for(int i = 0; i < n; i++) {
-        cin >> b[i];
-        sum += b[i];
-    }
-    cin >> m;
-    
-    for(int i = 0; i < n; i++) {
-        solver.add(s, i+2, a[i]);
-        solver.add(i+2, t, b[i]);
-    }
-    int k, c1, c2, cnt = t, node;
+    int c1, c2;
     for(int i = 0; i < m; i++) {
-        cin >> k >> c1 >> c2;
-        solver.add(s, ++cnt, c1);
-        solver.add(++cnt, t, c2);
-        sum += c1;
-        sum += c2;
-        while(k--) {
-            cin >> node;
-            solver.add(cnt-1, node+1, INT_MAX);
-            solver.add(node+1, cnt, INT_MAX);
-        }
+        cin >> c1 >> c2;
+        solver.add(c1+1, c2+1, 1);
+        solver.add(c2+1, c1+1, 1);
     }
-    cout << sum - solver.Dinic() << endl;
+    cout << solver.Dinic();
 }

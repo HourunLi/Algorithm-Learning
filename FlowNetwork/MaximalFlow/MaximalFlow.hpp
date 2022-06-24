@@ -17,6 +17,10 @@ public:
         DirectedGraph::add(v, u, 0);
     }
 
+    void add_r(int u, int v, int cap) {
+        DirectedGraph::add(u, v, cap);
+        DirectedGraph::add(v, u, cap);
+    }
     /**
      * @brief bfs function for Edmond Karp algorithm
      * 

@@ -72,13 +72,14 @@ public:
         memset(deep, -1, sizeof(int)*(n+5));
         queue<int> q;
         deep[s] = 0;
+        q.push(s);
         while(!q.empty()) {
             int from = q.front();
             q.pop();
             for(int e = head[from]; e; e = edges[e].next) {
                 if(deep[edges[e].to] == -1 && edges[e].w) {
-                    deep[edges[e].to] = deep[edges[e].from] + 1;
-                    q.push(deep[edges[e].to]);
+                    deep[edges[e].to] = deep[from] + 1;
+                    q.push(edges[e].to);
                 }
             }
         }
@@ -92,9 +93,9 @@ public:
      * @param flow the min flow of path from s to current node
      * @return int the sum of all feasible path in residual networks
      */
-    int dfs(int *cur, int *deep, int now, int flow) {
+    uint64 dfs(int *cur, int *deep, int now, int flow) {
         if(!flow || now == t) return flow;
-        int ret = 0, f;
+        uint64 ret = 0, f;
         for(int e = cur[now]; e; e = edges[e].next) {
             cur[now] = e;
             if(deep[edges[e].to] == deep[now] + 1 && (f = dfs(cur, deep, edges[e].to, min(flow, edges[e].w)))) {
@@ -108,11 +109,12 @@ public:
         return ret;
     }
     
-    int Dinic() {
-        int maxFlow = 0;
-        int *deep = new int[n+5]();
+    uint64 Dinic() {
+        uint64 maxFlow = 0;
+        int *deep = new int[n+5];
         int *cur = new int[n+5]();
         while(bfs(deep)) {
+            // cout << "here" << maxFlow << "\n";
             memcpy(cur, head, (n+5)*sizeof(int));
             maxFlow += dfs(cur, deep, s, INT_MAX);
         }

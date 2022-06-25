@@ -37,6 +37,11 @@ public:
         tot = 0;
     }
 
+    ~DirectedGraph() {
+        delete []edges;
+        delete []head;
+    }
+
     void add(int u, int v, int weight = 0, int cost = 0) {
         if(++tot >= m) {
             edges = (DirectedEdge*)realloc(edges, sizeof(DirectedEdge) * (2*m));
@@ -97,6 +102,9 @@ public:
         tot = 0;
     }
 
+    ~UndirectedGraph() {
+        delete []edges;
+    }
     void add(int u, int v, int w = 0) {
         if(++tot >= m) {
             edges = (UndirectedEdge*)realloc(edges, sizeof(UndirectedEdge) * (2*m));

@@ -92,7 +92,7 @@ public:
 
     bool dijkstra(int *dist, bool *vis, int *deep, MCMFNode *p) {
         memset(dist, 0x7F, sizeof(int) * (n+5));
-        memset(vis, 0, sizeof(int) * (n+5));
+        memset(vis, 0, sizeof(bool) * (n+5));
         priority_queue<Pair, vector<Pair>, greater<Pair> > q;
         dist[s] = 0;
         q.push(make_pair(0, s));

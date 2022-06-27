@@ -279,7 +279,6 @@ int main() {
         solver.add(u, v, w, c);
     }
     auto ans = solver.PrimalDual();
-    // cout <<"getAns\n";
     cout << ans.first << " " << ans.second << endl;
     return 0;
 }

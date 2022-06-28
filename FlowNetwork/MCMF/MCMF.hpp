@@ -137,10 +137,10 @@ public:
             minCost += minf * deep[t];
         }
         // cout << "kkk\n";
-        // delete []dist;
-        // delete []deep;
-        // delete []vis;
-        // delete []p;
+        delete []dist;
+        delete []deep;
+        delete []vis;
+        delete []p;
         return make_pair(maxFlow, minCost);
     }
 };

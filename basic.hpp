@@ -19,4 +19,10 @@ typedef long long ll;
 typedef unsigned long long uint64;
 typedef pair<int, int> Pair;
 
+#ifdef DEBUG
+#define print(...) printf(__VA_ARGS__)
+#else
+#define print(...)
+#endif
+
 #endif //! __BASIC_MACRO__

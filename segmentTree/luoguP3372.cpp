@@ -15,16 +15,14 @@ int main() {
     cin >> n >> m;
     SegmentTree solver = SegmentTree(n);
 
-    for(int i = 1; i <= n; i++) {
-        cin >> solver.data[i];
-    }
+    solver.inputData(n);
     solver.buildTree(1, n, 1);
     int opcode, x, y, k;
     for(int i = 0; i < m; i++) {
         cin >> opcode;
         if (opcode == 1) {
             cin >> x >> y >> k;
-            solver.update(x, y, 1, n, k, 1); 
+            solver.add(x, y, 1, n, k, 1); 
         } else if (opcode == 2) {
             cin >> x >> y;
             cout << solver.getSum(x, y, 1, n, 1) << endl;   
